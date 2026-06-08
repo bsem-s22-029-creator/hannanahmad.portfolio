@@ -4,6 +4,8 @@ const Skills = () => {
   const skillsRef = useRef(null)
   const [activeCategory, setActiveCategory] = useState('backend')
   const [barsVisible, setBarsVisible] = useState(false)
+  const [displayLevels, setDisplayLevels] = useState([])
+  const animationFrame = useRef(null)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -24,6 +26,37 @@ const Skills = () => {
 
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    setDisplayLevels(skillCategories[activeCategory].skills.map(() => 0))
+  }, [activeCategory])
+
+  useEffect(() => {
+    if (!barsVisible) {
+      return
+    }
+
+    const skills = skillCategories[activeCategory].skills
+    const duration = 1000
+    const start = performance.now()
+
+    const animate = (timestamp) => {
+      const progress = Math.min((timestamp - start) / duration, 1)
+      setDisplayLevels(skills.map((skill) => Math.round(skill.level * progress)))
+
+      if (progress < 1) {
+        animationFrame.current = requestAnimationFrame(animate)
+      }
+    }
+
+    animationFrame.current = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current)
+      }
+    }
+  }, [activeCategory, barsVisible])
 
   const skillCategories = {
     backend: {
@@ -108,7 +141,9 @@ const Skills = () => {
                 <div className="skill-header">
                   <span className="skill-icon">{skill.icon}</span>
                   <span className="skill-name">{skill.name}</span>
-                  <span className="skill-level">{skill.level}%</span>
+                  <span className="skill-level">
+                    {displayLevels[index] ?? 0}%
+                  </span>
                 </div>
                 <div className="skill-bar">
                   <div 
