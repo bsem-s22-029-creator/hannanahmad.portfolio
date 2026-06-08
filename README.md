@@ -10,3 +10,15 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Hannan Ahmad — Personal Portfolio
+
+This repository is a personal portfolio site built with React + Vite showcasing projects, skills, and a contact form.
+
+Quick start:
+
+```bash
+npm install
+npm run dev
+```
+
+To enable contact form sending via EmailJS, set the Vite env variables described in `CONTACT_SETUP.md`.

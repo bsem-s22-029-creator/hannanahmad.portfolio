@@ -134,7 +134,7 @@ const Footer = () => {
 
         <div className="footer-bottom">
           <div className="footer-copyright">
-            <p>&copy; {currentYear} Hannan. All rights reserved.</p>
+            <p>&copy; {currentYear} Hannan Ahmad. All rights reserved.</p>
             {/* <p>Built with ❤️ using React & Laravel</p> */}
           </div>
           <div className="footer-actions">
@@ -142,6 +142,7 @@ const Footer = () => {
               className="back-to-top"
               onClick={scrollToTop}
               aria-label="Back to top"
+              aria-controls="root"
             >
               <span className="arrow-up">↑</span>
             </button>

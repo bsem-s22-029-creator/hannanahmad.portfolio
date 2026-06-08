@@ -1,95 +1,60 @@
 // Email Service for Contact Form
-// This is a simple client-side email service that can be integrated with various email providers
+// Supports EmailJS (client-side) when Vite env variables are provided.
+import * as emailjs from '@emailjs/browser'
+
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 export const sendEmail = async (formData) => {
   try {
-    // For development purposes, we'll simulate sending an email
-    // In production, you would integrate with services like:
-    // - EmailJS (https://www.emailjs.com/)
-    // - Formspree (https://formspree.io/)
-    // - Netlify Forms (if deployed on Netlify)
-    // - Your own backend API
-    
-    console.log('Email would be sent with data:', formData);
-    
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // For now, we'll just log the data and return success
-    // In a real implementation, you would send this to your email service
-    
-    // Example integration with EmailJS:
-    /*
-    const emailjs = window.emailjs;
-    const result = await emailjs.send(
-      'YOUR_SERVICE_ID',
-      'YOUR_TEMPLATE_ID',
-      {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-        to_email: 'your.email@example.com'
-      },
-      'YOUR_PUBLIC_KEY'
-    );
-    return { success: true, result };
-    */
-    
-    // Example integration with Formspree:
-    /*
-    const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to send email');
-    }
-    
-    return { success: true };
-    */
-    
-    return { success: true };
-    
-  } catch (error) {
-    console.error('Error sending email:', error);
-    return { success: false, error: error.message };
-  }
-};
+    // If EmailJS is configured via env vars, use it
+    if (SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
+      const result = await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: import.meta.env.VITE_CONTACT_EMAIL || 'your.email@example.com'
+        },
+        PUBLIC_KEY
+      )
 
-// Instructions for setting up real email service:
+      return { success: true, result }
+    }
+
+    // Fallback: simulate sending during development
+    console.warn('EmailJS not configured — falling back to mock send')
+    console.log('Email payload:', formData)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    return { success: true }
+  } catch (error) {
+    console.error('Error sending email:', error)
+    return { success: false, error: error.message }
+  }
+}
+
 export const emailSetupInstructions = {
   emailjs: {
-    title: "EmailJS Setup",
+    title: 'EmailJS Setup',
     steps: [
-      "1. Go to https://www.emailjs.com/ and create an account",
-      "2. Create a new service (Gmail, Outlook, etc.)",
-      "3. Create an email template",
-      "4. Get your Service ID, Template ID, and Public Key",
-      "5. Install EmailJS: npm install @emailjs/browser",
-      "6. Replace the commented code in emailService.js with your credentials"
+      '1. Create an account at https://www.emailjs.com/',
+      "2. Create a service and a template; add the template variables (from_name, from_email, subject, message)",
+      "3. Add these env variables in your Vite .env file: VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY, VITE_CONTACT_EMAIL",
+      "4. Install dependency: npm install @emailjs/browser",
+      "5. Build and deploy — keep public key safe and don't embed private secrets in repo"
     ]
   },
   formspree: {
-    title: "Formspree Setup",
+    title: 'Formspree Setup',
     steps: [
-      "1. Go to https://formspree.io/ and create an account",
-      "2. Create a new form and get the form ID",
-      "3. Replace 'YOUR_FORM_ID' in the Formspree example code",
-      "4. The form will send emails to your registered email address"
-    ]
-  },
-  netlify: {
-    title: "Netlify Forms Setup",
-    steps: [
-      "1. Deploy your site to Netlify",
-      "2. Add 'netlify' attribute to your form: <form netlify>",
-      "3. Add hidden input: <input type='hidden' name='form-name' value='contact' />",
-      "4. Netlify will automatically handle form submissions"
+      '1. Create an account at https://formspree.io/',
+      "2. Create a form and get the form ID",
+      "3. Replace sendEmail implementation to POST to Formspree endpoint",
+      "4. Configure notifications and dashboard in Formspree"
     ]
   }
-};
+}

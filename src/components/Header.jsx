@@ -25,12 +25,12 @@ const Header = () => {
 
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
-      <nav className="nav">
+      <nav className="nav" aria-label="Main navigation">
         <div className="nav-brand">
-          <span className="brand-text">Hannan</span>
+          <span className="brand-text">Hannan Ahmad</span>
         </div>
         
-        <div className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+        <div id="nav-menu" className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`}>
           <ul className="nav-list">
             <li className="nav-item">
               <button 
@@ -101,6 +101,11 @@ const Header = () => {
         <div 
           className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          role="button"
+          tabIndex={0}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="nav-menu"
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsMobileMenuOpen(!isMobileMenuOpen) }}
         >
           <span></span>
           <span></span>

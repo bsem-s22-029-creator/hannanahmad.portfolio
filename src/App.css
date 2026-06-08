@@ -1521,8 +1521,15 @@ section {
 }
 
 .dark .skill-item {
-  background: #2d3748;
+  background: #1f2937;
   color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.dark .skill-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
 }
 
 .dark .skill-name {
@@ -1530,7 +1537,13 @@ section {
 }
 
 .dark .project-card {
-  background: #2d3748;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.dark .project-card:hover {
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.34);
 }
 
 .dark .project-title {
@@ -1542,7 +1555,9 @@ section {
 }
 
 .dark .timeline-content {
-  background: #2d3748;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .dark .timeline-title {
@@ -1575,7 +1590,9 @@ section {
 }
 
 .dark .education-card {
-  background: #2d3748;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .dark .education-degree {
@@ -1595,7 +1612,9 @@ section {
 }
 
 .dark .stat-card {
-  background: #2d3748;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .dark .stat-content h4 {
@@ -1637,7 +1656,9 @@ section {
 }
 
 .dark .contact-form {
-  background: #2d3748;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
 }
 
 .dark .form-group label {

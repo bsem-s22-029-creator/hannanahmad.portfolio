@@ -202,7 +202,7 @@ const Contact = () => {
           </div>
 
           <div className="contact-form-container">
-            <form className="contact-form" onSubmit={handleSubmit}>
+            <form className="contact-form" onSubmit={handleSubmit} aria-busy={isSubmitting}>
               <div className="form-group">
                 <label htmlFor="name">Name *</label>
                 <input
@@ -264,14 +264,14 @@ const Contact = () => {
               </button>
 
               {submitStatus === 'success' && (
-                <div className="form-success">
+                <div className="form-success" role="status" aria-live="polite">
                   <span className="success-icon">✅</span>
                   <span>Message sent successfully! I'll get back to you soon.</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="form-error">
+                <div className="form-error" role="alert" aria-live="assertive">
                   <span className="error-icon">❌</span>
                   <span>Failed to send message. Please try again or contact me directly.</span>
                 </div>
@@ -280,7 +280,7 @@ const Contact = () => {
           </div>
         </div>
 
-        <div className="contact-cta">
+            <div className="contact-cta">
           <div className="cta-content">
             <h3>Let's Build Something Amazing Together</h3>
             <p>
@@ -289,7 +289,7 @@ const Contact = () => {
             </p>
             <div className="cta-buttons">
               <a 
-                href="mailto:your.email@example.com" 
+                href="mailto:hannanahmad.official@gmail.com" 
                 className="btn btn-primary"
               >
                 Start a Conversation

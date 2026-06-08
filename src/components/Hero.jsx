@@ -63,7 +63,7 @@ const Hero = () => {
           <div className="hero-image">
             <div className="hero-avatar">
               <div className="avatar-placeholder">
-                <img src={heroImage} alt="Hero portrait" loading="eager" />
+                <img src={heroImage} alt="Hero portrait" loading="lazy" />
               </div>
               <div className="hero-bg-elements">
                 <div className="bg-circle bg-circle-1"></div>

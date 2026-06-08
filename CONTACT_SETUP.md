@@ -73,6 +73,19 @@ export const sendEmail = async (formData) => {
 };
 ```
 
+### Vite environment variables (recommended)
+
+If you're using Vite, set these in your `.env` or `.env.production` files (do NOT commit secrets):
+
+```
+VITE_EMAILJS_SERVICE_ID=your_service_id
+VITE_EMAILJS_TEMPLATE_ID=your_template_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+VITE_CONTACT_EMAIL=your.email@example.com
+```
+
+The `src/services/emailService.js` will automatically use these values. If they are not set, the service falls back to a development mock.
+
 ### For Formspree:
 ```javascript
 // In src/services/emailService.js

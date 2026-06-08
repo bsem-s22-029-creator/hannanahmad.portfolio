@@ -1,7 +1,7 @@
 {
-  "name": "my-app",
+  "name": "hannan-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,9 +9,16 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "description": "Personal portfolio of Hannan Ahmad — Full Stack Developer (Laravel & React)",
+  "author": "Hannan Ahmad <hannanahmad.official@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HananAhmad772/personal-portfolio.git"
+  },
   "dependencies": {
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "@emailjs/browser": "^3.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
