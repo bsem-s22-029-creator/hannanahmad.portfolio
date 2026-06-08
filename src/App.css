@@ -21,6 +21,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 /* Loading Screen */
@@ -151,6 +152,10 @@ section {
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
 }
 
+.btn:active {
+  transform: translateY(1px);
+}
+
 .btn-secondary {
   background: transparent;
   color: #667eea;
@@ -234,6 +239,9 @@ section {
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: #4a5568;
@@ -244,7 +252,8 @@ section {
   position: relative;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link.active {
   color: #667eea;
 }
 
@@ -257,6 +266,10 @@ section {
   height: 2px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   transition: width 0.3s ease;
+}
+
+.nav-link.active::after {
+  width: 100%;
 }
 
 .nav-link:hover::after {
@@ -788,12 +801,36 @@ section {
   background: white;
   padding: 1.5rem;
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 0.6s ease;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .skill-item:hover {
   transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.skill-item.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.summary-item {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.summary-item.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .skill-header {
@@ -1075,6 +1112,14 @@ section {
   position: relative;
   margin-bottom: 3rem;
   padding-left: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.timeline-item.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .timeline-marker {
@@ -1174,6 +1219,14 @@ section {
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.education-card.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .education-header {
@@ -1217,7 +1270,14 @@ section {
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.stat-card.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .stat-card:hover {
@@ -1452,6 +1512,7 @@ section {
 
 /* Dark Mode Styles */
 .dark {
+  transition: background-color 0.35s ease, color 0.35s ease;
   background-color: #1a202c;
   color: #e2e8f0;
 }

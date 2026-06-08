@@ -9,14 +9,18 @@ const Experience = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('animate')
+            observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     )
 
     if (experienceRef.current) {
-      observer.observe(experienceRef.current)
+      const items = experienceRef.current.querySelectorAll(
+        '.timeline-item, .education-card, .stat-card'
+      )
+      items.forEach((item) => observer.observe(item))
     }
 
     return () => observer.disconnect()

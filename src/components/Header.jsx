@@ -4,6 +4,7 @@ import { ThemeContext } from '../App.jsx'
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
   const { isDarkMode, toggleTheme } = useContext(ThemeContext)
 
   useEffect(() => {
@@ -13,6 +14,46 @@ const Header = () => {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'skills', 'projects', 'experience', 'contact']
+
+    const getActiveSection = () => {
+      const sections = sectionIds
+        .map((id) => ({ id, el: document.getElementById(id) }))
+        .filter((section) => section.el)
+
+      const threshold = 120
+      let activeId = 'home'
+      let closestDistance = Number.POSITIVE_INFINITY
+
+      sections.forEach(({ id, el }) => {
+        const top = el.getBoundingClientRect().top
+        const distance = Math.abs(top - threshold)
+
+        if (top <= threshold && distance < closestDistance) {
+          closestDistance = distance
+          activeId = id
+        }
+      })
+
+      return activeId
+    }
+
+    const handleScroll = () => {
+      const newActive = getActiveSection()
+      setActiveSection((prev) => (prev !== newActive ? newActive : prev))
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('resize', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
   }, [])
 
   const scrollToSection = (sectionId) => {
@@ -34,7 +75,7 @@ const Header = () => {
           <ul className="nav-list">
             <li className="nav-item">
               <button 
-                className="nav-link" 
+                className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} 
                 onClick={() => scrollToSection('home')}
               >
                 Home
@@ -42,7 +83,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <button 
-                className="nav-link" 
+                className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} 
                 onClick={() => scrollToSection('about')}
               >
                 About
@@ -50,7 +91,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <button 
-                className="nav-link" 
+                className={`nav-link ${activeSection === 'skills' ? 'active' : ''}`} 
                 onClick={() => scrollToSection('skills')}
               >
                 Skills
@@ -58,7 +99,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <button 
-                className="nav-link" 
+                className={`nav-link ${activeSection === 'projects' ? 'active' : ''}`} 
                 onClick={() => scrollToSection('projects')}
               >
                 Projects
@@ -66,7 +107,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <button 
-                className="nav-link" 
+                className={`nav-link ${activeSection === 'experience' ? 'active' : ''}`} 
                 onClick={() => scrollToSection('experience')}
               >
                 Experience
@@ -74,7 +115,7 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <button 
-                className="nav-link" 
+                className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`} 
                 onClick={() => scrollToSection('contact')}
               >
                 Contact

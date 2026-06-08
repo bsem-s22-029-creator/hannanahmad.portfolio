@@ -1,8 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import heroImage from '../assets/Hero-image.png'
 
 const Hero = () => {
   const heroRef = useRef(null)
+  const [counterStarted, setCounterStarted] = useState(false)
+  const [stats, setStats] = useState({ years: 0, projects: 0, satisfaction: 0 })
+
+  const animateValue = (key, target, duration = 1200) => {
+    const start = performance.now()
+
+    const update = (timestamp) => {
+      const progress = Math.min((timestamp - start) / duration, 1)
+      const value = Math.round(progress * target)
+      setStats((prev) => ({ ...prev, [key]: value }))
+
+      if (progress < 1) {
+        requestAnimationFrame(update)
+      }
+    }
+
+    requestAnimationFrame(update)
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -10,10 +28,16 @@ const Hero = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('animate')
+            if (!counterStarted) {
+              setCounterStarted(true)
+              animateValue('years', 2, 1000)
+              animateValue('projects', 10, 1200)
+              animateValue('satisfaction', 100, 1400)
+            }
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     )
 
     if (heroRef.current) {
@@ -21,7 +45,7 @@ const Hero = () => {
     }
 
     return () => observer.disconnect()
-  }, [])
+  }, [counterStarted])
 
   const scrollToContact = () => {
     const element = document.getElementById('contact')
@@ -76,15 +100,15 @@ const Hero = () => {
         
         <div className="hero-stats">
           <div className="stat-item">
-            <span className="stat-number">2+</span>
+            <span className="stat-number">{stats.years}+ </span>
             <span className="stat-label">Years Experience</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">10+</span>
+            <span className="stat-number">{stats.projects}+ </span>
             <span className="stat-label">Projects Completed</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">100%</span>
+            <span className="stat-number">{stats.satisfaction}%</span>
             <span className="stat-label">Client Satisfaction</span>
           </div>
         </div>

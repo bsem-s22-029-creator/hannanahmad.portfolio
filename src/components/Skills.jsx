@@ -3,17 +3,19 @@ import { useEffect, useRef, useState } from 'react'
 const Skills = () => {
   const skillsRef = useRef(null)
   const [activeCategory, setActiveCategory] = useState('backend')
+  const [barsVisible, setBarsVisible] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate')
+            setBarsVisible(true)
+            observer.disconnect()
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.15 }
     )
 
     if (skillsRef.current) {
@@ -102,7 +104,7 @@ const Skills = () => {
 
           <div className="skills-grid">
             {skillCategories[activeCategory].skills.map((skill, index) => (
-              <div key={index} className="skill-item">
+              <div key={index} className={`skill-item ${barsVisible ? 'animate' : ''}`}>
                 <div className="skill-header">
                   <span className="skill-icon">{skill.icon}</span>
                   <span className="skill-name">{skill.name}</span>
@@ -111,7 +113,7 @@ const Skills = () => {
                 <div className="skill-bar">
                   <div 
                     className="skill-progress" 
-                    style={{ width: `${skill.level}%` }}
+                    style={{ width: barsVisible ? `${skill.level}%` : '0%' }}
                   ></div>
                 </div>
               </div>
